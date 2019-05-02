@@ -29,16 +29,32 @@ function Circle(radius) {
 
   let defaultLocation = { x: 0, y: 0 };
 
-  let computeOptimumLocation = function() {
-    //
+  this.getDefaultLocation = function() {
+    return defaultLocation;
   };
 
   this.draw = () => {
-    computeOptimumLocation();
     console.log("draw");
   };
+
+  Object.defineProperty(this, "defaultLocation", {
+    get: function() {
+      return defaultLocation;
+    },
+    set: function(value) {
+      // validate value first.
+      if (!value.x || !value.y) throw new Error("Invalid Location");
+      defaultLocation = value;
+    }
+  });
 }
 
 const circle = new Circle(1);
 
 circle.draw();
+
+console.log(circle.defaultLocation);
+
+circle.defaultLocation = { x: 1, y: 2 };
+
+console.log(circle.defaultLocation);
