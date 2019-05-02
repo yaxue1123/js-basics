@@ -9,29 +9,36 @@
 // };
 
 // 1. A factory.
-function createCircle(radius) {
-  return {
-    radius,
-    draw: function() {
-      console.log("draw 1");
-    }
-  };
-}
+// function createCircle(radius) {
+//   return {
+//     radius,
+//     draw: function() {
+//       console.log("draw 1");
+//     }
+//   };
+// }
 
-const circle = createCircle(1);
+// const circle = createCircle(1);
 
-circle.draw();
+// circle.draw();
 
 // 2. A constructor function. Not a Class.
 // no class concept in javascript.
 function Circle(radius) {
-  console.log("this", this);
   this.radius = radius;
+
+  let defaultLocation = { x: 0, y: 0 };
+
+  let computeOptimumLocation = function() {
+    //
+  };
+
   this.draw = () => {
-    console.log("draw 2");
+    computeOptimumLocation();
+    console.log("draw");
   };
 }
 
-const another = new Circle(1);
+const circle = new Circle(1);
 
-another.draw();
+circle.draw();
