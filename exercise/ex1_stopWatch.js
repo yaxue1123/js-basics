@@ -1,33 +1,47 @@
 function StopWatch() {
-  let start = -1;
-  let end = -1;
-  this.duration = 0;
+  // duration should be accumulative.
+  let startTime,
+    endTime = null;
+  let duration = 0;
+
+  // flag variable.
+  let running = false;
   this.start = () => {
-    // If already started, alert error.
-    if (start !== -1) {
-      alert("You have already started!");
-    } else {
-      // clear old data.
-      end = -1;
-      duration = 0;
-      let time = new Date();
-      start = time.getTime();
-      console.log("start time: ", start);
+    if (running) {
+      throw new Error("Stopwatch has already started");
     }
+
+    running = true;
+
+    startTime = new Date();
   };
 
   this.stop = () => {
-    if (end !== -1) {
-      alert("You have already stopped. ");
-    } else {
-      let time = new Date();
-      end = time.getTime();
-      this.duration = (end - start) / 1000;
-      start = -1;
-      console.log("end time: ", end);
-      console.log("duration", this.duration, "s");
+    if (!running) {
+      throw new Error("Stopwatch has already stopped");
     }
+    running = false;
+
+    endTime = new Date();
+
+    const seconds = (endTime.getTime() - startTime.getTime()) / 1000;
+
+    duration += seconds;
   };
+
+  this.reset = () => {
+    startTime = null;
+    endTime = null;
+    duration = 0;
+    running = false;
+  };
+
+  // read-only property: duration.
+  Object.defineProperty(this, "duration", {
+    get: function() {
+      return duration;
+    }
+  });
 }
 
 const sw = new StopWatch();
